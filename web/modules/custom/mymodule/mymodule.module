@@ -1,0 +1,39 @@
+<?php
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+
+/**
+ * Implements hook_ENTITY_TYPE_view()
+ *  Invokes the custom hook i.e. node_view_count and pass the current entity
+ *  object to that.
+ */
+function mymodule_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  $module_handler = \Drupal::moduleHandler();
+  $module_handler->invokeAll('node_view_count', [$entity]);
+  $build['view_count'] = [
+    '#cache' => ['max-age' => 0],
+  ];
+}
+
+/**
+ * Implements hook_node_view_count()
+ *  Checks the session variable to get the number of times the perticular node
+ *  is viewed in the current session, if the node is never viwed then initialize
+ *  the count with 1, along with this, the function is also responsible for
+ *  show the counting in that perticular node.
+ */
+function mymodule_node_view_count(EntityInterface $entity) {
+  $session = \Drupal::request()->getSession();
+  $current_count = $session->get('current_count',[]);
+  if (!isset($current_count[$entity->id()])) {
+    $current_count[$entity->id()] = 1;
+  }
+  $current_count[$entity->id()]++;
+  $session->set('current_count',$current_count);
+  \Drupal::messenger()->addMessage(t('you have visited this node for @total times in this session', [
+    '@total' => $current_count[$entity->id()],
+  ]));
+}
+
