@@ -1,0 +1,15 @@
+mymodule.sayhello:
+  path: '/hello'
+  defaults:
+    _controller: 'Drupal\mymodule\Controller\FirstController::sayHello'
+    _title: 'Fist Page Of Custom Module'
+  requirements:
+    _permission: 'access content'
+
+mymodule.dynamicWelcome:
+  path: '/welcome/{param1}/{param2}'
+  defaults:
+    _controller: 'Drupal\mymodule\Controller\FirstController::dynamicWelcome'
+    _title: 'Welcome Page'
+  requirements:
+    _permission: 'access content'
