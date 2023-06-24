@@ -2,7 +2,7 @@
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
-
+use \Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_view()
@@ -30,10 +30,30 @@ function mymodule_node_view_count(EntityInterface $entity) {
   if (!isset($current_count[$entity->id()])) {
     $current_count[$entity->id()] = 1;
   }
-  $current_count[$entity->id()]++;
+  else {
+    $current_count[$entity->id()]++;
+  }
   $session->set('current_count',$current_count);
   \Drupal::messenger()->addMessage(t('you have visited this node for @total times in this session', [
     '@total' => $current_count[$entity->id()],
   ]));
 }
 
+/**
+ * Implements hook_form_alter()
+ */
+function mymodule_form_alter(&$form, FormStateInterface &$form_state, $form_id)
+{
+
+  if($form_id == 'node_article_form') {
+    $form['field_message'] = array(
+      '#type' => 'item',
+      '#title' => t('New article'),
+      '#markup' => t('You are about to create a new article'),
+      '#weight' => -6,
+    );
+    $form['body']['widget'][0]['#description'] = 'add your main content here.';
+    $form['field_image']['widget'][0]['#title'] = 'Image Field';
+  }
+  // dd($form);
+}
