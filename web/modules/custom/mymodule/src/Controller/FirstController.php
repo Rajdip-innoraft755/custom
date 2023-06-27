@@ -37,8 +37,13 @@ class FirstController extends ControllerBase {
    *   @return array
    */
   public function dynamicWelcome(string $param1, string $param2) {
-    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-    $username = $user->getAccountName();
+    $user = \Drupal::currentUser();
+    if ($user->id() != 0) {
+      $username = $user->getAccountName();
+    }
+    else {
+      $username = 'Rajdip Roy.';
+    }
     return [
       '#type' => 'markup',
       '#markup' => t('hello @first_name @last_name from @user',[

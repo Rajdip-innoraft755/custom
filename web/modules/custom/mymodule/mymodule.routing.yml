@@ -13,3 +13,11 @@ mymodule.dynamicWelcome:
     _title: 'Welcome Page'
   requirements:
     _permission: 'access content'
+
+mymodule.settings:
+  path: '/admin/config/mymodule'
+  defaults:
+    _form: 'Drupal\mymodule\Form\FirstForm'
+    _title: 'THIS IS THE FIRST FORM'
+  requirements:
+    _permission: 'access content'
