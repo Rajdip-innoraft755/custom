@@ -2,6 +2,7 @@
 
 namespace Drupal\mymodule\Controller;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Controller\ControllerBase;
 
 
@@ -37,7 +38,7 @@ class FirstController extends ControllerBase {
    *   @return array
    */
   public function dynamicWelcome(string $param1, string $param2) {
-    $user = \Drupal::currentUser();
+    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
     if ($user->id() != 0) {
       $username = $user->getAccountName();
     }
@@ -51,8 +52,10 @@ class FirstController extends ControllerBase {
         '@last_name' => $param2,
         '@user' => $username,
       ]),
+      '#cache' => [
+        'tags' => $user->getCacheTags(),
+      ]
     ];
   }
 }
-
 ?>

@@ -12,6 +12,4 @@ dependencies:
   # add a submodule dependency
   - devel:devel_generate
 
-# Try to add the configure button in extend page, but it is not showing
-# correctly I think it occurs as I dont add the routing file.
 configure: mymodule.settings

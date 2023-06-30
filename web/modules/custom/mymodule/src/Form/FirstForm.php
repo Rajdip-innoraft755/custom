@@ -7,9 +7,15 @@ use Drupal\Core\Form\FormStateInterface;
 
 /**
  * FirstForm is the class responsible to create a custom config form and takes
- * some basic inputs from user.
+ * some basic inputs from user and store them after validation.
+ *
+ * @package Drupal\mymodule\Form
+ *
+ * @author Rajdip Roy <rajdip.roy@innoraft.com>
  */
 class FirstForm extends ConfigFormBase {
+
+  protected $config_name = 'mymodule.settings';
 
   /**
    *{@inheritDoc}
@@ -23,14 +29,14 @@ class FirstForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames()
   {
-    return ['mymodule.settings'];
+    return [$this->config_name];
   }
 
   /**
    * {@inheritDoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('mymodule.settings');
+    $config = $this->config($this->config_name);
     $form['full_name'] = [
       '#type' => 'textfield',
       '#title' => t('Enter Your Full Name'),
@@ -129,7 +135,7 @@ class FirstForm extends ConfigFormBase {
       $error['email'] = 'Email extension is not supported.';
     }
 
-    if (!preg_match('/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}/',substr($values['phone_no'],3))) {
+    if (!preg_match('/^\+91[6-9][0-9]{9}$/',$values['phone_no'])) {
       $error['phone_no'] = 'Phone number is not a valid.';
     }
     return $error;
@@ -139,7 +145,7 @@ class FirstForm extends ConfigFormBase {
    * {@inheritDoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $config = $this->config('mymodule.settings');
+    $config = $this->config($this->config_name);
     $config->set('full_name', $form_state->getValue('full_name'));
     $config->set('email', $form_state->getValue('email'));
     $config->set('phone_no', $form_state->getValue('phone_no'));
