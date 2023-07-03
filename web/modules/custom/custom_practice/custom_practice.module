@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for custom_practice module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
+use Symfony\Component\Routing\RouteCollection;
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function custom_practice_entity_access(EntityInterface $entity, $operation, AccountInterface $account){
+  $route = \Drupal::routeMatch()->getRouteName();
+  if ($route == 'custom_practice.dynamic') {
+    $permission = 'access the custom page';
+    $role = \Drupal\user\Entity\Role::load('content_editor');
+    if ($role) {
+      $role->revokePermission($permission);
+      $role->save();
+    }
+  }
+}
+?>
