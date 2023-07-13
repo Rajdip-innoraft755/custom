@@ -2,8 +2,11 @@
 
 namespace Drupal\mymodule\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\mymodule\ValidateData;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * FirstForm is the class responsible to create a custom config form and takes
@@ -15,7 +18,41 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class FirstForm extends ConfigFormBase {
 
+  /**
+   * @var string
+   *   This is to store the configuration name.
+   */
   protected $config_name = 'mymodule.settings';
+
+  /**
+   * @var \Drupal\mymodule\ValidateData
+   *   This is to store the object of the ValidateData class.
+   */
+  protected ValidateData $validate;
+
+  /**
+   * Constructs a FirstForm object.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The factory for configuration objects.
+   * @param \Drupal\mymodule\ValidateData $validate
+   *   Stores the object of ValidateData class used for input validation.
+   */
+  public function __construct(ConfigFactoryInterface $config_factory, ValidateData $validate) {
+    parent::__construct($config_factory);
+    $this->validate = $validate;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(ContainerInterface $container)
+  {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('mymodule.validation'),
+    );
+  }
 
   /**
    *{@inheritDoc}
@@ -92,7 +129,7 @@ class FirstForm extends ConfigFormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     parent::validateForm($form,$form_state);
-    $error = $this->validateData($form_state->getValues());
+    $error = $this->validate->validation($form_state->getValues());
     if(isset($error['full_name'])){
       $form_state->setErrorByName('full_name',$error['full_name']);
     }
@@ -103,42 +140,6 @@ class FirstForm extends ConfigFormBase {
       $form_state->setErrorByName('phone_no', $error['phone_no']);
     }
 
-  }
-
-  /**
-   * This function is responsible for validating the user input data like email,
-   * phone number and full name and store the errors in an array and return
-   * the array.
-   *
-   *   @param array $values
-   *     Stores the input values submitted by the user in the form as an array.
-   *
-   *   @return array
-   *     Returs the error array after validating all of the data.
-   */
-  public function validateData(array $values)
-  {
-    $error = [];
-    if (!preg_match('/^[a-zA-Z ]*$/', $values['full_name'])) {
-      $error['full_name'] = 'Full name should only contain alphabets.';
-    }
-
-    $domain_name = explode('.',explode('@',$values['email'])[1])[0];
-    $extension = explode('.', explode('@', $values['email'])[1])[1];
-    $supported_domain_name = ['gmail','yahoo','innoraft','outlook'];
-
-    if (!in_array($domain_name,$supported_domain_name)) {
-      $error['email'] = 'Email domain is not supported.';
-    }
-
-    if ($extension != 'com') {
-      $error['email'] = 'Email extension is not supported.';
-    }
-
-    if (!preg_match('/^\+91[6-9][0-9]{9}$/',$values['phone_no'])) {
-      $error['phone_no'] = 'Phone number is not a valid.';
-    }
-    return $error;
   }
 
   /**

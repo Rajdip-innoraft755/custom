@@ -2,14 +2,51 @@
 
 namespace Drupal\mymodule\Controller;
 
+use Drupal;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Cache\CacheTagsInvalidator;
 use Drupal\Core\Controller\ControllerBase;
-
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\AccountProxyInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\user\Entity\User;
+use Drupal\Core\Entity\EntityTypeManager;
 
 /**
- * FirstController
+ * FirstController is to sends the response to the perticular route
  */
 class FirstController extends ControllerBase {
+
+  /**
+   * @var AccountInterface
+   *   This variable to store the instance of current user.
+   */
+  protected AccountInterface $current_user;
+
+  /**
+   * Constructor is used for creating the instance of the FirstController Class
+   * with the required dependency.
+   *
+   *   @param AccountProxyInterface $account
+   *     Accepts the instance of AccountProxyInterface as the only dependency.
+   */
+  public function __construct(AccountProxyInterface $account, EntityTypeManager $entityTypeManager) {
+    // $this->currentUser = $user->getStorage('user')->load($account->id());
+    $this->current_user = $account;
+
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(ContainerInterface $container)
+  {
+    return new static (
+      $container->get('current_user'),
+      $container->get('entity_type.manager'),
+    );
+  }
+
 
   /**
    * @method sayHello
@@ -38,9 +75,8 @@ class FirstController extends ControllerBase {
    *   @return array
    */
   public function dynamicWelcome(string $param1, string $param2) {
-    $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-    if ($user->id() != 0) {
-      $username = $user->getAccountName();
+    if ($this->current_user->id() != 0) {
+      $username = $this->current_user->getAccountName();
     }
     else {
       $username = 'Rajdip Roy.';
@@ -53,9 +89,10 @@ class FirstController extends ControllerBase {
         '@user' => $username,
       ]),
       '#cache' => [
-        'tags' => $user->getCacheTags(),
+        // 'tags' => $this->current_user->getCacheTags(),
       ]
     ];
   }
+
 }
 ?>

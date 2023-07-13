@@ -6,11 +6,14 @@ use Drupal;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\mymodule\ValidateData;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * FirstForm is the class responsible to create a custom config form and takes
+ * FirstAjaxForm is the class responsible to create a custom config form and takes
  * some basic inputs from user and validate those through AJAX.
  *
  * @package Drupal\mymodule\Form
@@ -20,7 +23,42 @@ use Drupal\Core\Form\FormStateInterface;
 class FirstAjaxForm extends ConfigFormBase
 {
 
-  protected $config_name = 'mymodule.ajaxsettings';
+  /**
+   * @var string
+   *   This is to store the configuration name.
+   */
+  protected string $config_name = 'mymodule.ajaxsettings';
+
+  /**
+   * @var \Drupal\mymodule\ValidateData
+   *   This is to store the object of the ValidateData class.
+   */
+  protected ValidateData $validate;
+
+  /**
+   * Constructs a FirstAjaxForm object.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The factory for configuration objects.
+   * @param \Drupal\mymodule\ValidateData $validate
+   *   Stores the object of ValidateData class used for input validation.
+   */
+  public function __construct(ConfigFactoryInterface $config_factory, ValidateData $validate)
+  {
+    parent::__construct($config_factory);
+    $this->validate = $validate;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public static function create(ContainerInterface $container)
+  {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('mymodule.validation'),
+    );
+  }
 
   /**
    *{@inheritDoc}
@@ -108,64 +146,19 @@ class FirstAjaxForm extends ConfigFormBase
   }
 
   /**
-   * This function is responsible for validating the user input data like email,
-   * phone number and full name and store the errors in an array and return
-   * the array.
-   *
-   *   @param array $values
-   *     Stores the input values submitted by the user in the form as an array.
-   *
-   *   @return array
-   *     Returs the error array after validating all of the data.
-   */
-  public function validateData(array $values)
-  {
-    $error = [];
-    if (!$values['full_name']) {
-      $error['full_name'] = 'Please enter the full name.';
-    }
-    elseif (!preg_match('/^[a-zA-Z ]*$/', $values['full_name'])) {
-      $error['full_name'] = 'Full name should only contain alphabets.';
-    }
-
-    $domain_name = explode('.', explode('@', $values['email'])[1])[0];
-    $extension = explode('.', explode('@', $values['email'])[1])[1];
-    $supported_domain_name = ['gmail', 'yahoo', 'innoraft', 'outlook'];
-
-    if (!$values['email']) {
-      $error['email'] = 'Please enter the email ID.';
-    }
-    elseif (!in_array($domain_name, $supported_domain_name)) {
-      $error['email'] = 'Email domain is not supported.';
-    }
-    elseif ($extension != 'com') {
-      $error['email'] = 'Email extension is not supported.';
-    }
-
-
-    if (!$values['phone_no']) {
-      $error['phone_no'] = 'Please enter the phone number.';
-    }
-    elseif (!preg_match('/^\+91[6-9][0-9]{9}$/', $values['phone_no'])) {
-      $error['phone_no'] = 'Phone number is not a valid.';
-    }
-    return $error;
-  }
-
-  /**
    * This Function is used to call the validation function on ajax call and
    * sends back the response after adding proper messages to the callback.
    *
-   *   @param array $form
-   *     Takes the $form as argument.
-   *   @param FormStateInterface $form_state
-   *     Takes the FormStateInterface variable to retreive the input data.
+   * @param array $form
+   *   Takes the $form as argument.
+   * @param FormStateInterface $form_state
+   *   Takes the FormStateInterface variable to retreive the input data.
    *
-   *   @return AjaxResponse
-   *     Returns AjaxResponse to the callback.
+   * @return AjaxResponse
+   *   Returns AjaxResponse to the callback.
    */
   public function validateWithAjax(array &$form, FormStateInterface $from_state) {
-    $error = $this->validateData($from_state->getValues());
+    $error = $this->validate->validation($from_state->getValues());
     $response = new AjaxResponse();
     $response->addCommand(new CssCommand('.error', ['color' => 'red',]));
     $response->addCommand(new HtmlCommand('.error', ''));
@@ -183,6 +176,7 @@ class FirstAjaxForm extends ConfigFormBase
     }
     return $response;
   }
+
   /**
    * {@inheritDoc}
    */
@@ -195,13 +189,13 @@ class FirstAjaxForm extends ConfigFormBase
    * This Function is used to save the configouration based on valid input of
    * required data.
    *
-   *   @param array $form
-   *     Takes the $form as argument.
-   *   @param FormStateInterface $form_state
-   *     Takes the FormStateInterface variable to retreive the input data.
+   * @param array $form
+   *   Takes the $form as argument.
+   * @param FormStateInterface $form_state
+   *   Takes the FormStateInterface variable to retreive the input data.
    *
-   *   @return array
-   *     Returns the $form array.
+   * @return array
+   *   Returns the $form array.
    */
   public function submitFormWithAjax(array &$form, FormStateInterface $form_state) {
     $config = $this->config($this->config_name);

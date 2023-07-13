@@ -5,8 +5,6 @@
  * Primary module hooks for Block Practice module.
  */
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
 /**
  * implements hook_user_login()
  */
