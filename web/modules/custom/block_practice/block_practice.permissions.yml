@@ -1,0 +1,4 @@
+administer block_practice configuration:
+  title: 'Administer block_practice configuration'
+  description: 'Optional description.'
+  restrict access: true
