@@ -15,7 +15,7 @@ use Drupal\Core\Form\FormStateInterface;
  *   category = @Translation("Block Practice")
  * )
  */
-class ExampleBlock extends BlockBase implements BlockPluginInterface{
+class ExampleBlock extends BlockBase implements BlockPluginInterface {
 
   /**
    * {@inheritdoc}
@@ -23,7 +23,7 @@ class ExampleBlock extends BlockBase implements BlockPluginInterface{
   public function build() {
     $config = $this->getConfiguration();
     $build['content'] = [
-      '#markup' => $this->t($config['name']),
+      '#markup' => $this->t('@name', ['@name' => $config['name']]),
     ];
     return $build;
   }
@@ -34,10 +34,10 @@ class ExampleBlock extends BlockBase implements BlockPluginInterface{
   public function blockForm($form, FormStateInterface $form_state) {
     $config = $this->getConfiguration();
     $form['name'] = [
-      '#type'=> 'textfield',
-      '#title' => t('Enter Your Name'),
+      '#type' => 'textfield',
+      '#title' => $this->t('Enter Your Name'),
       '#size' => 30,
-      '#default_value' => isset($config['name']) ? $config['name'] : '',
+      '#default_value' => $config['name'] ?? '',
     ];
     return $form;
   }
