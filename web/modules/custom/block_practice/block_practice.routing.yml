@@ -1,0 +1,24 @@
+block_practice.example:
+  path: '/block-practice/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\block_practice\Controller\BlockPracticeController::build'
+  requirements:
+    _permission: 'access content'
+
+block_practice.welcome:
+  path: '/custom-welcome-page'
+  defaults:
+    _title: 'Custom Welcome'
+    _controller: '\Drupal\block_practice\Controller\BlockPracticeController::build'
+    _block: 'Drupal\block_practice\Plugin\Block\WelcomeUserBlock'
+  requirements:
+    _permission: 'access content'
+
+block_practice.flagship:
+  path: '/flagship'
+  defaults:
+    _title: 'Flagship Program'
+    _form: '\Drupal\block_practice\Form\FlagshipForm'
+  requirements:
+    _permission: 'access conetent'

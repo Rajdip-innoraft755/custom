@@ -1,0 +1,5 @@
+name: Field Practice
+type: module
+description: This module is for practicing the tasks of Field API.
+package: Custom
+core_version_requirement: ^9 || ^10

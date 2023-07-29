@@ -1,0 +1,7 @@
+services:
+  mymodule.dynamicWelcome:
+    class: 'Drupal\mymodule\Controller\FirstController'
+    arguments: ['@current_user']
+
+  mymodule.validation:
+    class: Drupal\mymodule\ValidateData

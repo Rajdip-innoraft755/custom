@@ -1,0 +1,5 @@
+services:
+  custom_practice.route_alter:
+    class: Drupal\custom_practice\Routing\RouteAlter
+    tags:
+      - { name: event_subscriber }
