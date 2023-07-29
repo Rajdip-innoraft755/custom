@@ -3,3 +3,10 @@ entity.movie.overview:
   parent: system.admin_structure
   description: 'List of movies to extend site functionality.'
   route_name: entity.movie.collection
+
+entity.movie.toolbar:
+  title: Movies Budget
+  parent: system.admin
+  description: 'List of movies to extend site functionality.'
+  route_name: entity_practice.movie_budget
+  weight: 8

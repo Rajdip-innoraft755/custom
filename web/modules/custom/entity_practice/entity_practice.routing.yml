@@ -30,3 +30,10 @@ entity.movie.delete_form:
   requirements:
     _permission: 'administer movie'
 
+entity_practice.movie_budget:
+  path: '/admin/movie_budget'
+  defaults:
+    _form: 'Drupal\entity_practice\Form\MovieBudget'
+    _title: 'Budget Of Movie'
+  requirements:
+    _role: 'administrator+content_editor'
