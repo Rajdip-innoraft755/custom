@@ -1,0 +1,33 @@
+.flagship-container {
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.355), rgba(0, 0, 0, 0.60)), url("../image/bg.jpg");
+  background-size: cover;
+}
+
+.flagship-container h2 {
+  padding: 10px 0px 0px;
+  color: white;
+}
+
+.flagship-data-wrap {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flagship-data h3 {
+  color: white;
+  font-size: 20px;
+  margin: 15px;
+}
+
+.bar {
+  width: 100px;
+  background-color: white;
+  height: 5px;
+  margin: 0px auto;
+}
+
+.flagship-data .golden {
+  color: gold;
+  font-size: 30px;
+}

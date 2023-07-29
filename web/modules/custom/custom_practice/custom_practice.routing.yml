@@ -1,0 +1,9 @@
+custom_practice.dynamic:
+  path: '/custom-practice/dynamic/{value}'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\custom_practice\Controller\CustomPracticeController::build'
+  requirements:
+    _permission: 'access the custom page'
+    _role: 'administrator+content_editor'
+    _custom_access: '\Drupal\custom_practice\Controller\CustomPracticeController::accessCheck'
