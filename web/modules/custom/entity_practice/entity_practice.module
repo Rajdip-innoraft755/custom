@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * This file for implements the hooks required for this module.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_node_view().
+ */
+function entity_practice_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  $bundle = $entity->bundle();
+  if ($bundle === 'movie') {
+    $price = $entity->get('field_entity_practice_price')->value;
+    $budget = Drupal::config('entity_practice.budget')->get('budget');
+    $status = '';
+    if ($budget && $price) {
+      if ($price < $budget) {
+        $status = 'under';
+      }
+      elseif ($price > $budget) {
+        $status = 'over';
+      }
+      else {
+        $status = 'within';
+      }
+      $build['content'] = [
+        '#markup' => t('This movie is @status budget', [
+          '@status' => $status,
+        ]),
+        '#cache' => [
+          'tags' => Drupal::config('entity_practice.budget')->getCacheTags(),
+        ],
+      ];
+    }
+  }
+  return $build;
+}

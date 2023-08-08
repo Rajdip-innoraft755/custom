@@ -1,0 +1,40 @@
+mymodule.sayhello:
+  path: '/hello'
+  defaults:
+    _controller: 'Drupal\mymodule\Controller\FirstController::sayHello'
+    _title: 'Fist Page Of Custom Module'
+  requirements:
+    _permission: 'access content'
+
+mymodule.dynamicWelcome:
+  path: '/welcome/{param1}/{param2}'
+  defaults:
+    _controller: 'Drupal\mymodule\Controller\FirstController::dynamicWelcome'
+    _title: 'Welcome Page'
+  requirements:
+    _permission: 'access content'
+
+mymodule.settings:
+  path: '/admin/config/mymodule'
+  defaults:
+    _form: 'Drupal\mymodule\Form\FirstForm'
+    _title: 'THIS IS THE FIRST FORM'
+  requirements:
+    _permission: 'access content'
+
+mymodule.ajaxsettings:
+  path: '/admin/config/mymodule_ajax'
+  defaults:
+    _form: 'Drupal\mymodule\Form\FirstAjaxForm'
+    _title: 'THIS IS THE FIRST AJAX FORM'
+  requirements:
+    _permission: 'access content'
+
+mymodule.one_time_login_settings:
+  path: '/onetimelogin'
+  defaults:
+    _form: 'Drupal\mymodule\Form\OneTimeLogin'
+    _title: 'Generate One Time Login Link'
+  requirements:
+    _permission: 'access content'
+    _role: 'administrator'

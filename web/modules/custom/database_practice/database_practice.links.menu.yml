@@ -1,0 +1,11 @@
+event_dashboard.main_nav:
+  title: Events Dashboard
+  menu_name: main
+  description: 'List of movies to extend site functionality.'
+  route_name: database_practice.event_dashboard
+
+term_details.main_nav:
+  title: Term Details
+  menu_name: main
+  description: 'Details of the Taxonomy Terms.'
+  route_name: database_practice.term_details

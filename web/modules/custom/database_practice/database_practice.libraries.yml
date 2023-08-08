@@ -1,0 +1,5 @@
+event-dashboard:
+  version: 1.x
+  css:
+    theme:
+      css/event-dashboard.css: {}

@@ -1,0 +1,19 @@
+.show-time-table table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.show-time-table td,th {
+  border: 1px solid rgb(59, 56, 56);
+  text-align: center;
+  padding: 8px;
+}
+
+.show-time-table tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.show-time-table h2 {
+  text-align: center;
+}

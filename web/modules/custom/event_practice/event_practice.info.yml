@@ -1,0 +1,5 @@
+name: Event Practice
+type: module
+description: This module to use custom event.
+package: Custom
+core_version_requirement: ^9 || ^10

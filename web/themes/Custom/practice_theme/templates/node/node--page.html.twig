@@ -1,0 +1,13 @@
+{{ attach_library('practice_theme/custom-page') }}
+<div class = 'custom-page'>
+  <div class = 'custom-webform'>
+    {% if node.field_test_form is defined %}
+      {{ drupal_entity('webform', 'contact') }}
+    {% endif %}
+  </div>
+  <div class = 'custom-paragraph'>
+    {% if node.field_test_paragraph[0] is defined%}
+      {{ drupal_entity('paragraph',  node.field_test_paragraph[0].value.target_id) }}
+    {% endif %}
+  </div>
+</div>

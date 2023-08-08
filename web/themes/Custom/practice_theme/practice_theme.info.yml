@@ -1,0 +1,42 @@
+name: 'Practice Theme'
+type: theme
+core_version_requirement: ^9 || ^10
+base theme: bootstrap5
+logo: logo.svg
+screenshot: screenshot.jpg
+description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+  nisi ut aliquip ex ea commodo consequat.'
+
+dependencies:
+  - bootstrap5
+
+regions:
+  header: Header
+  nav_branding: 'Navigation branding region'
+  nav_main: 'Main navigation region'
+  nav_additional: 'Additional navigation region (eg search form, social icons, etc)'
+  breadcrumb: Breadcrumbs
+  content: 'Main content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer: Footer
+  custom_region: Custom Region
+
+libraries-extend:
+  user/drupal.user:
+    - bootstrap5/user
+  core/drupal.dropbutton:
+    - bootstrap5/dropbutton
+  core/drupal.dialog:
+    - bootstrap5/dialog
+  file/drupal.file:
+    - bootstrap5/file
+  core/drupal.progress:
+    - bootstrap5/progress
+
+ckeditor_stylesheets:
+  - css/style.css
+ckeditor5-stylesheets:
+  - css/ck5style.css
