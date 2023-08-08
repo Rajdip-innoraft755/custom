@@ -1,0 +1,5 @@
+name: Views Practice
+description: This is to perform the tasks related to views API.
+core_version_requirement: ^9 || ^10
+type: module
+package: Custom
