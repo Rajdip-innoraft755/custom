@@ -1,0 +1,6 @@
+name: Entity Pracice
+type: module
+description: This module is for practicing the tasks of Entity API.
+package: Custom
+core_version_requirement: ^9 || ^10
+configure: entity.movie.collection

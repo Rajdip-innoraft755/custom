@@ -1,0 +1,15 @@
+<div class = 'flagship-container'>
+<h2> FLAGSHIP PROGRAMMES </h2>
+<div class = 'flagship-data-wrap'>
+{% for key,items in data %}
+  <div class='flagship-data'>
+    <h3>{{ items.project_name }}</h3>
+    <div class='bar'></div>
+    <h3>{{ items.first_label }}</h3>
+    <h3 class="golden">{{ items.value_first_label }}</h3>
+    <h3>{{ items.second_label }}</h3>
+    <h3 class="golden">{{ items.value_second_label }}</h3>
+  </div>
+{% endfor %}
+</div>
+</div>

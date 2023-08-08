@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Block Practice module.
+ */
+
+/**
+ * implements hook_user_login()
+ */
+// function block_practice_user_login($account) {
+//   $response =new RedirectResponse('/block-practice/welcome');
+//   $response->send();
+//   return;
+// }
+
+/**
+ * Implements hook_theme().
+ */
+function block_practice_theme()
+{
+  return [
+    'flagship_block' => [
+      'variables' => [
+        'data' => [],
+      ],
+    ],
+  ];
+}
