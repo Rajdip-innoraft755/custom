@@ -1,0 +1,5 @@
+name: Database Practice
+type: module
+description: This module is providing the feature mentioned in the task for database API.
+package: Custom
+core_version_requirement: ^9 || ^10

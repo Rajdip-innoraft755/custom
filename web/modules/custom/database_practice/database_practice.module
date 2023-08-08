@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Database Practice module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function database_practice_theme() {
+  return [
+    'event-dashboard' => [
+      'variables' => [
+        'yearly' => [],
+        'quarterly' => [],
+        'quarter_name' => [],
+        'type_wise_event' => [],
+      ],
+    ],
+  ];
+}

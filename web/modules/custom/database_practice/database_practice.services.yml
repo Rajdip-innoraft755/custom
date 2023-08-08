@@ -1,0 +1,4 @@
+services:
+  database_practice.get_term_details:
+    class: 'Drupal\database_practice\GetTermDetails'
+    arguments: ['@database']

@@ -1,0 +1,15 @@
+database_practice.event_dashboard:
+  path: '/event_dashboard'
+  defaults:
+    _title: 'Event Dashboard'
+    _controller: 'Drupal\database_practice\Controller\EventDashboardController::build'
+  requirements:
+    _role: 'authenticated'
+
+database_practice.term_details:
+  path: '/term_details'
+  defaults:
+    _title: 'Term Details'
+    _form: 'Drupal\database_practice\Form\TermDetailsForm'
+  requirements:
+    _role: 'authenticated'

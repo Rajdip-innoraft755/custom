@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - database_practice
+name: 'Event'
+type: event
+description: 'Content type that can be used to store the details about event'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true
