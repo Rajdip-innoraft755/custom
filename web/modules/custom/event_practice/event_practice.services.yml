@@ -1,0 +1,12 @@
+services:
+  my_config_events_subscriber:
+    class: '\Drupal\event_practice\EventSubscriber\KernelRequestEventsSubscriber'
+    tags:
+      - { name: 'event_subscriber' }
+    arguments: ['@event_dispatcher']
+
+  node_view_events_subscriber:
+    class: '\Drupal\event_practice\EventSubscriber\NodeViewEventsSubscriber'
+    tags:
+      - { name: 'event_subscriber' }
+    arguments: ['@config.factory', '@messenger']

@@ -1,0 +1,15 @@
+.custom-page {
+  display: block;
+  width: 100%;
+}
+.custom-page .custom-webform {
+  display: inline-block;
+  float: left;
+  width: 50%;
+}
+.custom-page .custom-paragraph {
+  display: inline-block;
+  width: 50%;
+  float: right;
+  text-align: center;
+}

@@ -1,0 +1,5 @@
+name: Block Practice
+type: module
+description: This block is for practicing block API
+package: Custom
+core_version_requirement: ^9 || ^10

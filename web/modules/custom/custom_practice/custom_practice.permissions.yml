@@ -1,0 +1,4 @@
+access the custom page:
+  title: 'custom practice dynamic page access'
+  description: 'Optional description.'
+  restrict access: true

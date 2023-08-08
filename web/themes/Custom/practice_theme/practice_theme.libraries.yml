@@ -1,0 +1,9 @@
+field_show_details:
+  css:
+    theme:
+        css/field-show-details--movie.css: {}
+
+custom-page:
+  css:
+    theme:
+      css/node--page.css: {}

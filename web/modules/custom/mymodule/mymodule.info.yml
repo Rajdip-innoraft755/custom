@@ -1,0 +1,15 @@
+name: 'My First Drupal Custom Module'
+description: 'Practice the custom module building'
+type: module
+package: Custom
+core_version_requirement: ^9 || ^10
+
+dependencies:
+  # add a core module dependency
+  - drupal:views_ui
+  # add a contrib module dependency
+  - pathauto:pathauto
+  # add a submodule dependency
+  - devel:devel_generate
+
+configure: mymodule.settings
