@@ -1,0 +1,36 @@
+{{ attach_library('practice_theme/field_show_details') }}
+<h4> SHOW DETAILS </h4>
+<div class= "show-time-table">
+  <table>
+    <thead>
+    <tr>
+      <th>Sl No.</th>
+      <th>City</th>
+      <th>Theater</th>
+      <th>Timings</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if items is defined %}
+      {% for item in items %}
+        <tr>
+          <td> {{ loop.index }} </td>
+          <td> {{ (item.content['#paragraph'].field_city[0].value) }} </td>
+          <td> {{ (item.content['#paragraph'].field_theater[0].value) }} </td>
+          <td>
+          {% for time in item.content['#paragraph'].field_show_time %}
+            {% if loop.last %}
+              {{ time.value|date('h:i A') }}
+            {% else %}
+              {{ time.value|date('h:i A') }} ,
+            {% endif %}
+          {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <h6> NO SHOWS AVAILABLE </h6>
+    {% endif %}
+    </tbody>
+  </table>
+</div>
